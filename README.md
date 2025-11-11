@@ -20,4 +20,6 @@ Complete VoIP lab setup using Asterisk 22.6.0 running in Docker.
 
 ## Quick Start
 
-1. **Clone the repository:**
+1. to change the IP use this Command :
+~/update-asterisk-ip.sh
+
