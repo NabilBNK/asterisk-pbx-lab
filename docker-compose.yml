@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  asterisk:
+    image: andrius/asterisk:latest
+    container_name: asterisk-pbx
+    hostname: asterisk
+    restart: unless-stopped
+    ports: 
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "10000-10099:10000-10099/udp"
+    volumes:
+      - ./config/pjsip.conf:/etc/asterisk/pjsip.conf
+      - ./config/extensions.conf:/etc/asterisk/extensions.conf
+      - ./config/voicemail.conf:/etc/asterisk/voicemail.conf
+      - ./config/confbridge.conf:/etc/asterisk/confbridge.conf
+      - ./config/musiconhold.conf:/etc/asterisk/musiconhold.conf
+      - ./config/features.conf:/etc/asterisk/features.conf
+      - ./config/queues.conf:/etc/asterisk/queues.conf
+      - ./config/modules.conf:/etc/asterisk/modules.conf
+      - ./recordings:/var/spool/asterisk/voicemail
+      - ./sounds:/var/lib/asterisk/sounds/custom
+    environment:
+      - TZ=Europe/Paris
+    privileged: true

@@ -1,0 +1,12 @@
+# Exclude recordings and logs
+recordings/
+sounds/
+*.log
+
+# Exclude backup files
+*.backup
+*.bak
+*~
+
+# Docker volumes data
+.docker/
