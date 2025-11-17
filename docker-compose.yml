@@ -6,10 +6,7 @@ services:
     container_name: asterisk-pbx
     hostname: asterisk
     restart: unless-stopped
-    ports: 
-      - "5060:5060/udp"
-      - "5060:5060/tcp"
-      - "10000-10099:10000-10099/udp"
+    network_mode: host
     volumes:
       - ./config/pjsip.conf:/etc/asterisk/pjsip.conf
       - ./config/extensions.conf:/etc/asterisk/extensions.conf
@@ -19,8 +16,16 @@ services:
       - ./config/features.conf:/etc/asterisk/features.conf
       - ./config/queues.conf:/etc/asterisk/queues.conf
       - ./config/modules.conf:/etc/asterisk/modules.conf
-      - ./recordings:/var/spool/asterisk/voicemail
+      - ./config/rtp.conf:/etc/asterisk/rtp.conf
+      - asterisk-voicemail:/var/spool/asterisk/voicemail
       - ./sounds:/var/lib/asterisk/sounds/custom
+      - asterisk-sounds:/var/lib/asterisk/sounds  # ← Add this
+      - asterisk-moh:/var/lib/asterisk/moh       # ← And this
+
     environment:
       - TZ=Europe/Paris
     privileged: true
+
+volumes:
+  asterisk-voicemail:
+    external: true
