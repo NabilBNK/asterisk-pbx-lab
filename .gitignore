@@ -1,13 +1,3 @@
-# Temporary sound files (large - ~35MB)
-sounds_temp/
-*.tar.gz
-
-# Backup scripts
-backup-asterisk-lab.sh
-restore-asterisk-lab.sh
-
-# Backup archives
-asterisk-backups/
-
-# Docker volumes
-recordings/
+*.log
+.env
+*.backup

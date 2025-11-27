@@ -1,0 +1,77 @@
+[general]
+static=yes
+writeprotect=no
+
+[internal]
+; Extension 1005 - NBK
+exten => 1005,1,NoOp(Calling User 1005 - NBK)
+exten => 1005,2,Dial(PJSIP/1005,15)
+exten => 1005,3,VoiceMail(1005@main)
+exten => 1005,4,Hangup()
+
+; Direct dialing between users
+exten => 1001,1,NoOp(Calling User 1001 - Laptop)
+ same => n,Dial(PJSIP/1001,15)
+ same => n,VoiceMail(1001@main,b)
+ same => n,Hangup()
+
+exten => 1002,1,NoOp(Calling User 1002 - iPhone)
+ same => n,Dial(PJSIP/1002,15,b)
+ same => n,VoiceMail(1002@main)
+ same => n,Hangup()
+
+exten => 1003,1,NoOp(Calling User 1003)
+ same => n,Dial(PJSIP/1003,15)
+ same => n,VoiceMail(1003@main,b)
+ same => n,Hangup()
+
+; Voicemail access - dial *97
+exten => *97,1,NoOp(Voicemail Access)
+ same => n,VoiceMailMain(${CALLERID(num)}@main)
+ same => n,Hangup()
+
+; Echo test - dial 600
+exten => 600,1,NoOp(Echo Test)
+ same => n,Answer()
+ same => n,Wait(1)
+ same => n,Playback(demo-echotest)
+ same => n,Echo()
+ same => n,Hangup()
+
+; Conference room - dial 700
+exten => 700,1,NoOp(Conference Room)
+ same => n,Answer()
+ same => n,ConfBridge(conference1)
+ same => n,Hangup()
+
+; Queue access
+exten => 800,1,NoOp(Support Queue)
+ same => n,Answer()
+ same => n,Queue(support_queue)
+ same => n,Hangup()
+
+exten => 801,1,NoOp(Sales Queue)
+ same => n,Answer()
+ same => n,Queue(sales_queue)
+ same => n,Hangup()
+
+; Call parking
+[parkedcalls]
+exten => 701,1,Park()
+exten => 702,1,Park()
+exten => 703,1,Park()
+
+; Call forward - unconditional
+exten => *72,1,NoOp(Call Forward Activate)
+ same => n,Set(DB(CF/${CALLERID(num)})=${EXTEN:3})
+ same => n,Answer()
+ same => n,Wait(1)
+ same => n,Playback(call-fwd-on)
+ same => n,Hangup()
+
+exten => *73,1,NoOp(Call Forward Deactivate)
+ same => n,DBdel(CF/${CALLERID(num)})
+ same => n,Answer()
+ same => n,Wait(1)
+ same => n,Playback(call-fwd-off)
+ same => n,Hangup()
