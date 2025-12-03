@@ -1,0 +1,4 @@
+extension,password,fullname,vm_password,email
+1004,Pass1004,Alice Johnson,5678,alice@example.com
+1005,Pass1005,Bob Smith,6789,bob@example.com
+1006,Pass1006,Carol White,7890,carol@example.com
